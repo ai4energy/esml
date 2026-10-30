@@ -36,6 +36,11 @@ Linux x86_64，学术/教学/个人非商业用途免费。从 GitHub 发布页�
     b1.net.Va = 0.10415017989169018
     本机 release 整进程墙钟约 0.32 s
 
+每个值带 unit（此算例源文件未声明单位，所以是 null；引擎不猜）；
+meta 带 engineVersion、源文件 SHA-256、耗时、converged 与 unitCoverage。
+未收敛不会返回半个信封，而是非零退出。字段见
+https://docs.ai4energy.cn/esml/results
+
 
 三、Python：一次性调用
 

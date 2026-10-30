@@ -35,6 +35,10 @@ export ESML_HOME="$PWD/esml-academic-1.8.1-linux-x86_64"
 - `b1.net.Vm = 1.0284201462972262`
 - `b1.net.Va = 0.10415017989169018`
 - 本机（release）整进程墙钟约 **0.32 s**
+- 每个值带 `unit`（IEEE 300 源文件未声明单位，所以是 `null`，引擎不猜）；
+  `meta` 带 `engineVersion`、源文件 SHA-256、`durationMs`、`converged` 与
+  `unitCoverage`。未收敛不会返回半个信封，而是非零退出。
+  字段见[结果契约](https://docs.ai4energy.cn/esml/results)。
 
 ## 三、Python：一次性调用
 

@@ -2,7 +2,9 @@
 
 ## 已就位
 
-- [x] 学术版发布：ESML v1.8.0 / MMPROPS v0.6.0（Linux x86_64，校验和）
+- [x] 学术版发布：ESML v1.8.1（结果契约：单位/指纹/收敛）/ MMPROPS v0.6.0（Linux x86_64，校验和）
+- [x] Python / Julia 客户端 v0.2.0（`units` / `meta`）
+- [x] 结果契约文档：`https://docs.ai4energy.cn/esml/results`
 - [x] 两个主页与教程（IEEE 300；水蒸汽 + VLE）
 - [x] 官网 www/docs：产品首页、`/esml/`、`/mmprops/`、`/schema/`、`/feedback/`
 - [x] GitHub Discussions 开启并发布公告（ESML #1、MMPROPS #1；网页端可置顶）
