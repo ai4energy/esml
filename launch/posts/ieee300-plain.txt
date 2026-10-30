@@ -12,12 +12,12 @@
 
 一、下载学术版
 
-Linux x86_64，学术/教学/个人非商业用途免费。从 GitHub 发布页下载 v1.8.0：
+Linux x86_64，学术/教学/个人非商业用途免费。从 GitHub 发布页下载 v1.8.1：
 
     https://github.com/ai4energy/esml/releases
 
-    tar -xzf esml-academic-1.8.0-linux-x86_64.tar.gz
-    export ESML_HOME="$PWD/esml-academic-1.8.0-linux-x86_64"
+    tar -xzf esml-academic-1.8.1-linux-x86_64.tar.gz
+    export ESML_HOME="$PWD/esml-academic-1.8.1-linux-x86_64"
     "$ESML_HOME/esml" --version
 
 包内自带引擎、物性后端、标准模型库 library/、教程与烟测脚本。
@@ -39,7 +39,7 @@ Linux x86_64，学术/教学/个人非商业用途免费。从 GitHub 发布页�
 
 三、Python：一次性调用
 
-    pip install git+https://github.com/ai4energy/esml-python@v0.1.0
+    pip install git+https://github.com/ai4energy/esml-python@v0.2.0
 
     from esml import solve
 
@@ -54,7 +54,7 @@ Python 客户端是 MIT，只通过公开 JSON 协议调用引擎，不含引擎
 四、Julia：一次性调用
 
     using Pkg
-    Pkg.add(url = "https://github.com/ai4energy/ESML.jl", rev = "v0.1.0")
+    Pkg.add(url = "https://github.com/ai4energy/ESML.jl", rev = "v0.2.0")
 
     using ESML
 
@@ -79,7 +79,7 @@ Python 客户端是 MIT，只通过公开 JSON 协议调用引擎，不含引擎
     https://github.com/ai4energy/esml/tree/main/tutorials/ieee300
 
 下载：
-    https://github.com/ai4energy/esml/releases/tag/v1.8.0
+    https://github.com/ai4energy/esml/releases/tag/v1.8.1
 
 反馈：
     https://github.com/ai4energy/esml/issues/new?template=feedback.md

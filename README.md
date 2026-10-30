@@ -11,7 +11,7 @@
 
 ```bash
 tar -xzf esml-academic-*-linux-x86_64.tar.gz
-export PATH="$PWD/esml-academic-1.8.0-linux-x86_64:$PATH"
+export PATH="$PWD/esml-academic-1.8.1-linux-x86_64:$PATH"
 esml --version
 ```
 
@@ -22,6 +22,34 @@ esml --version
 ```bash
 ./esml solve library/domains/power/cases/case300.comp.esml -L library --json
 ```
+
+## 结果里有什么
+
+`--json` 返回一份可直接消费的结果契约，而不只是数值：
+
+```json
+{
+  "apiVersion": "esml.solve/v1",
+  "values": [
+    { "path": "tclab.T1", "value": 339.007, "unit": "K" }
+  ],
+  "meta": {
+    "engineVersion": "1.8.1",
+    "docHash": "612e8b85…",
+    "durationMs": 0.423,
+    "converged": true,
+    "unitCoverage": { "known": 2, "total": 2, "complete": true }
+  }
+}
+```
+
+- `unit`：一致 SI 单位下的量纲表达式；模型未声明单位时为 `null`，引擎不猜。
+- `docHash`：源文件 SHA-256，可作缓存/归档键。
+- `converged`：成功信封恒为 `true`；未收敛非零退出，不返回半个结果。
+- `unitCoverage`：有多少变量真正带了单位，一眼判断结果能否直接进后处理。
+
+完整字段、失败语义与客户端映射见
+[结果契约](https://docs.ai4energy.cn/esml/results)。
 
 ## Python 与 Julia
 

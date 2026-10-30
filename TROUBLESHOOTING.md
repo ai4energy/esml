@@ -5,7 +5,7 @@
 客户端会按 `ESML_BIN` → `PATH` 查找；显式给的路径不可执行会直接报错，不会静默换一个。
 
 ```bash
-export ESML_BIN=/path/to/esml-academic-1.8.0-linux-x86_64/esml
+export ESML_BIN=/path/to/esml-academic-1.8.1-linux-x86_64/esml
 "$ESML_BIN" --version
 ```
 
@@ -39,8 +39,8 @@ export ESML_PROPS_LIB=/path/to/libesml_mmprops_ffi.so
 
 ## Python / Julia 客户端
 
-- Python：`pip install git+https://github.com/ai4energy/esml-python@v0.1.0`
-- Julia：`Pkg.add(url="https://github.com/ai4energy/ESML.jl", rev="v0.1.0")`
+- Python：`pip install git+https://github.com/ai4energy/esml-python@v0.2.0`
+- Julia：`Pkg.add(url="https://github.com/ai4energy/ESML.jl", rev="v0.2.0")`
 
 客户端只调用公开协议，不需要编译器或引擎源码。
 
