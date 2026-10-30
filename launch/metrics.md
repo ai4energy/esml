@@ -4,7 +4,7 @@
 
 | 指标 | ESML | MMPROPS |
 | --- | ---: | ---: |
-| Release 下载（主包） | 1 | 1 |
+| Release 下载（主包） | 4 | 1 |
 | Star | 0 | 0 |
 | Fork | 0 | 0 |
 | Issue（全部） | 0 | 0 |
