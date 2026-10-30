@@ -20,6 +20,18 @@
 你有多少变量带了单位。给变量或它的类型补上 `unit=` 后重新求解，同一份结果
 就会带单位。完整字段见[结果契约](https://docs.ai4energy.cn/esml/results)。
 
+## `iterations` / `residual` 怎么读？
+
+`iterations` 是产出该结果的 Newton 迭代次数（homotopy 各步累加）；`residual`
+是接受解时的残差 ∞-范数，`residualTolerance` 是它通过的门限。正常结果应满足
+`residual <= residualTolerance`；不需要自己猜“收敛得干不干净”。
+
+## 报错里的 `code` 有什么用？
+
+带 `--json` 失败时，stderr 末行是 `esml.error/v1`，带稳定 `code`（如
+`io.read`、`solve.failed`、`license.size`）和 `hint`。Python/Julia 客户端抛
+`EsmlError` 时带 `.code` / `.hint`，集成方按 code 分支即可，不用解析英文文本。
+
 ## 怎么判断结果可信？
 
 成功信封里 `meta.converged` 恒为 `true`，并带 `engineVersion`、`docHash`

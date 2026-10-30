@@ -11,7 +11,7 @@
 
 ```bash
 tar -xzf esml-academic-*-linux-x86_64.tar.gz
-export PATH="$PWD/esml-academic-1.8.1-linux-x86_64:$PATH"
+export PATH="$PWD/esml-academic-1.9.0-linux-x86_64:$PATH"
 esml --version
 ```
 
@@ -34,10 +34,13 @@ esml --version
     { "path": "tclab.T1", "value": 339.007, "unit": "K" }
   ],
   "meta": {
-    "engineVersion": "1.8.1",
+    "engineVersion": "1.9.0",
     "docHash": "612e8b85…",
     "durationMs": 0.423,
     "converged": true,
+    "iterations": 2,
+    "residual": 1.73e-16,
+    "residualTolerance": 3.40e-08,
     "unitCoverage": { "known": 2, "total": 2, "complete": true }
   }
 }
@@ -46,7 +49,10 @@ esml --version
 - `unit`：一致 SI 单位下的量纲表达式；模型未声明单位时为 `null`，引擎不猜。
 - `docHash`：源文件 SHA-256，可作缓存/归档键。
 - `converged`：成功信封恒为 `true`；未收敛非零退出，不返回半个结果。
+- `iterations` / `residual` / `residualTolerance`：求解质量，残差与门限可直接比较。
 - `unitCoverage`：有多少变量真正带了单位，一眼判断结果能否直接进后处理。
+- 失败时 stderr 末行是 `esml.error/v1`（稳定 `code` + `hint`）；Python/Julia
+  客户端抛 `EsmlError` 并带 `.code`。
 
 完整字段、失败语义与客户端映射见
 [结果契约](https://docs.ai4energy.cn/esml/results)。

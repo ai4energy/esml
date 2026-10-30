@@ -5,7 +5,7 @@
 客户端会按 `ESML_BIN` → `PATH` 查找；显式给的路径不可执行会直接报错，不会静默换一个。
 
 ```bash
-export ESML_BIN=/path/to/esml-academic-1.8.1-linux-x86_64/esml
+export ESML_BIN=/path/to/esml-academic-1.9.0-linux-x86_64/esml
 "$ESML_BIN" --version
 ```
 
@@ -37,10 +37,23 @@ export ESML_PROPS_LIB=/path/to/libesml_mmprops_ffi.so
 请附：文档、命令、完整报错、`esml --version`、期望值与实际值。求解器失败是
 **响亮报错**，不会静默返回替代解。
 
+## 按 `code` 处理报错
+
+带 `--json` 失败时，stderr 末行是 `esml.error/v1`：
+
+```json
+{"apiVersion":"esml.error/v1","code":"io.read","message":"…","hint":"…","docHash":null,"engineVersion":"1.9.0"}
+```
+
+常见 `code`：`license.size`、`license.dtil`、`io.read`、`solve.failed`、
+`model.parse`、`model.structure`、`usage`、`engine.error`。`message` 是权威
+细节；Python/Julia 客户端把 `code` / `hint` / `docHash` 放在异常对象上。
+未知 code 按 `engine.error` 处理。
+
 ## Python / Julia 客户端
 
-- Python：`pip install git+https://github.com/ai4energy/esml-python@v0.2.0`
-- Julia：`Pkg.add(url="https://github.com/ai4energy/ESML.jl", rev="v0.2.0")`
+- Python：`pip install git+https://github.com/ai4energy/esml-python@v0.3.0`
+- Julia：`Pkg.add(url="https://github.com/ai4energy/ESML.jl", rev="v0.3.0")`
 
 客户端只调用公开协议，不需要编译器或引擎源码。
 

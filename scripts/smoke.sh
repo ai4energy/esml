@@ -1,8 +1,8 @@
 #!/bin/sh
 # 学术版端到端烟测：solve / simulate / DTIL 门 / 规模门。
-#   sh scripts/smoke.sh /path/to/esml-academic-1.8.1-linux-x86_64
+#   sh scripts/smoke.sh /path/to/esml-academic-1.9.0-linux-x86_64
 set -eu
-home=${1:?usage: smoke.sh /path/to/esml-academic-1.8.1-linux-x86_64}
+home=${1:?usage: smoke.sh /path/to/esml-academic-1.9.0-linux-x86_64}
 esml="$home/esml"
 case300="$home/library/domains/power/cases/case300.comp.esml"
 case2869="$home/library/domains/power/cases/case2869.comp.esml"
@@ -16,7 +16,13 @@ printf '%s' "$out" | grep -q '"unknowns":4604'
 printf '%s' "$out" | grep -q '"path":"b1.net.Vm"'
 printf '%s' "$out" | grep -q '"value":1.0284201462972262'
 printf '%s' "$out" | grep -q '"docHash":"[0-9a-f]\{64\}"'
-echo "solve IEEE 300 (4604 unknowns): OK"
+printf '%s' "$out" | grep -q '"unit":"1"'
+printf '%s' "$out" | grep -q '"iterations":'
+echo "solve IEEE 300 (4604 unknowns, units + quality): OK"
+
+err=$("$esml" solve "$home/does-not-exist.esml" --json 2>&1 || true)
+printf '%s' "$err" | grep -q '"apiVersion":"esml.error/v1"'
+echo "error contract (esml.error/v1): OK"
 
 out=$("$esml" simulate "$decay" --tspan 0,1 --steps 2 --json 2>/dev/null)
 printf '%s' "$out" | grep -q '"apiVersion":"esml.simulate/v1"'

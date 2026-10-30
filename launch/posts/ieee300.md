@@ -13,9 +13,9 @@
 Linux x86_64，学术/教学/个人非商业用途免费：
 
 ```bash
-# 从 https://github.com/ai4energy/esml/releases 下载 v1.8.1
-tar -xzf esml-academic-1.8.1-linux-x86_64.tar.gz
-export ESML_HOME="$PWD/esml-academic-1.8.1-linux-x86_64"
+# 从 https://github.com/ai4energy/esml/releases 下载 v1.9.0
+tar -xzf esml-academic-1.9.0-linux-x86_64.tar.gz
+export ESML_HOME="$PWD/esml-academic-1.9.0-linux-x86_64"
 "$ESML_HOME/esml" --version
 ```
 
@@ -35,15 +35,16 @@ export ESML_HOME="$PWD/esml-academic-1.8.1-linux-x86_64"
 - `b1.net.Vm = 1.0284201462972262`
 - `b1.net.Va = 0.10415017989169018`
 - 本机（release）整进程墙钟约 **0.32 s**
-- 每个值带 `unit`（IEEE 300 源文件未声明单位，所以是 `null`，引擎不猜）；
-  `meta` 带 `engineVersion`、源文件 SHA-256、`durationMs`、`converged` 与
-  `unitCoverage`。未收敛不会返回半个信封，而是非零退出。
+- 每个值带 `unit`（IEEE 300 的标幺/弧度已声明为无量纲，所以是 `"1"`，
+  4,604 个值单位齐全）；`meta` 带 `engineVersion`、源文件 SHA-256、`durationMs`、
+  `converged`、`iterations`、`residual` 与 `unitCoverage`。未收敛不会返回半个
+  信封，而是非零退出。失败时 stderr 末行是 `esml.error/v1`（稳定 `code`）。
   字段见[结果契约](https://docs.ai4energy.cn/esml/results)。
 
 ## 三、Python：一次性调用
 
 ```bash
-pip install git+https://github.com/ai4energy/esml-python@v0.2.0
+pip install git+https://github.com/ai4energy/esml-python@v0.3.0
 ```
 
 ```python
@@ -61,7 +62,7 @@ Python 客户端是 MIT，只通过公开 JSON 协议调用引擎，不含引擎
 
 ```julia
 using Pkg
-Pkg.add(url = "https://github.com/ai4energy/ESML.jl", rev = "v0.2.0")
+Pkg.add(url = "https://github.com/ai4energy/ESML.jl", rev = "v0.3.0")
 ```
 
 ```julia
@@ -85,7 +86,7 @@ println(out.unknowns, " ", out.values["b1.net.Vm"])
 完整教程（含三角色脚本、烟测、排错）：
 
 - 教程：https://github.com/ai4energy/esml/tree/main/tutorials/ieee300
-- 下载：https://github.com/ai4energy/esml/releases/tag/v1.8.1
+- 下载：https://github.com/ai4energy/esml/releases/tag/v1.9.0
 - 反馈：https://github.com/ai4energy/esml/issues/new?template=feedback.md
 
 如果你在装、跑第一个模型、看第一条报错时卡住了，请直接开 issue 或邮件

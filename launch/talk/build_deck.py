@@ -347,8 +347,8 @@ def build_slides():
         *head("备份", "命令清单"),
         code(0.75, 1.8, 11.8, 3.2, [
             '# ESML',
-            'tar -xzf esml-academic-1.8.0-linux-x86_64.tar.gz',
-            'export ESML_HOME=$PWD/esml-academic-1.8.0-linux-x86_64',
+            'tar -xzf esml-academic-1.9.0-linux-x86_64.tar.gz',
+            'export ESML_HOME=$PWD/esml-academic-1.9.0-linux-x86_64',
             '$ESML_HOME/esml solve \\',
             '  $ESML_HOME/library/domains/power/cases/case300.comp.esml \\',
             '  -L $ESML_HOME/library --json',
