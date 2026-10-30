@@ -55,9 +55,12 @@ traj = simulate("quickstart/decay.esml", (0.0, 1.0), 20;
 println(traj.series["m.x"][end])
 ```
 
-## 教程
+## 教程与文档
 
 - [十分钟跑通 IEEE 300 潮流](tutorials/ieee300/README.md)：命令行 / Python / Julia 三份实测脚本。
+- [常见问题](FAQ.md)：学术版/商业版、规模上限、DTIL、商业许可。
+- [排错](TROUBLESHOOTING.md)：找不到二进制、超限、物性后端、单位警告。
+- 烟测：`sh scripts/smoke.sh "$ESML_HOME"`（版本 / solve / simulate / DTIL 门 / 规模门）。
 
 ## 版本
 
