@@ -1,0 +1,102 @@
+# 十分钟算清水蒸汽与甲烷-乙烷相包络：一个独立物性引擎
+
+做流程/热力计算时，物性往往是最先卡住的一步：状态点、饱和、闪蒸、二元
+VLE、T-x-y 包络，每个都要单独找关联式、对单位、验收敛。MMPROPS 是一个独立
+物性引擎：水/蒸汽（IF97）、制冷剂、二元混合物，命令行输出 JSON/CSV/文本，
+数值可带单位。学术版免费，下载即跑。
+
+本文给出三条路径：命令行、Python、Julia；数字全部本机实测。
+
+## 一、下载学术版
+
+```bash
+# 从 https://github.com/ai4energy/mmprops/releases 下载 v0.6.0
+tar -xzf mmprops-academic-0.6.0-linux-x86_64.tar.gz
+export MMPROPS_HOME="$PWD/mmprops-academic-0.6.0-linux-x86_64"
+"$MMPROPS_HOME/mmprops" --version
+```
+
+## 二、命令行：四类计算
+
+```bash
+# 水状态点：300 K、1 bar
+"$MMPROPS_HOME/mmprops" props --fluid water --t "300 K" --p "1 bar" --format json
+
+# 饱和态：373.15 K
+"$MMPROPS_HOME/mmprops" sat --fluid water --t "373.15 K" --format json
+
+# 闪蒸：1 bar、1000 kJ/kg
+"$MMPROPS_HOME/mmprops" flash --fluid water --spec ph --p "1 bar" \
+  --h "1000 kJ/kg" --format json
+
+# 甲烷/乙烷 VLE 泡点：220 K、x1 = 0.5
+"$MMPROPS_HOME/mmprops" vle --kind bubble --components methane,ethane \
+  --x 0.5,0.5 --t "220 K" --format json
+
+# T-x-y 包络
+"$MMPROPS_HOME/mmprops" envelope --components methane,ethane --t "220 K" \
+  --points 5 --format json
+```
+
+参考值：
+
+| 量 | 值 |
+| --- | --- |
+| 水 `rho`（300 K / 1 bar） | `996.556338 kg/m3` |
+| 水 `h` | `112653.679689 J/kg` |
+| 水 `psat`（373.15 K） | `101417.996368 Pa` |
+| 闪蒸 `t` / `x` | `372.755929 K` / `0.258033` |
+| VLE `p` / `y1`（220 K） | `3993218.99 Pa` / `0.847911` |
+
+## 三、Python / Julia
+
+```bash
+pip install git+https://github.com/ai4energy/mmprops-python@v0.1.0
+```
+
+```python
+from mmprops import props, sat, flash, vle
+
+water = props("water", "300 K", "1 bar")
+print(water.values["rho"], water.units["rho"])
+print(sat("water", "373.15 K").values["psat"])
+
+two_phase = flash("water", p="1 bar", h="1000 kJ/kg")
+print(two_phase.values["t"], two_phase.values["x"])
+
+point = vle("bubble", ["methane", "ethane"], "220 K", x=[0.5, 0.5])
+print(point.p, point.y)
+```
+
+```julia
+using Pkg
+Pkg.add(url = "https://github.com/ai4energy/MMProps.jl", rev = "v0.1.0")
+```
+
+```julia
+using MMProps
+
+water = props("water", "300 K", "1 bar")
+println(water.values["rho"], " ", water.units["rho"])
+```
+
+两个客户端都是 MIT，每次调用一个进程、读 JSON，不保留状态。
+
+## 四、边界与设计取舍
+
+- 两相下无定义的量（如两相 `rho`）返回 `null` / `None` / `nothing`，不是 0。
+- 未收敛或超范围**响亮失败**，不会静默返回替代值。
+- VLE 目前只支持**二元**混合物；`x`/`y` 长度必须与组分数一致。
+- 数据包默认内嵌基线；自定义用 `--data DIR` 或 `MMPROPS_DATA`，坏包会响亮失败。
+- 当前公开二进制只有 Linux x86_64。
+
+## 五、下一步
+
+- 教程：https://github.com/ai4energy/mmprops/tree/main/tutorials/water-steam
+- 下载：https://github.com/ai4energy/mmprops/releases/tag/v0.6.0
+- 反馈：https://github.com/ai4energy/mmprops/issues/new?template=feedback.md
+
+数值问题请附：流体/组分、状态点、期望值、实际值、`mmprops --version`。
+第一英里问题按 bug 处理，24 小时内首响。
+
+引擎是商业软件（不是 MIT）：学术/教学/个人非商业用途免费，商业用途需授权。
