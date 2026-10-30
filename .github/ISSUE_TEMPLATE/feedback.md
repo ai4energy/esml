@@ -1,19 +1,19 @@
 ---
-name: Feedback
-about: Tell us what you are modeling and where you got stuck
-title: "[feedback] "
+name: 反馈
+about: 告诉我们你在建什么模型、卡在哪一步
+title: "[反馈] "
 labels: feedback
 assignees: ""
 ---
 
-**What are you modeling?**
-<!-- e.g. a district-heating network, a controller benchmark, a course exercise -->
+**你在建什么模型？**
+<!-- 例如：区域供热网、控制器基准、课程练习 -->
 
-**Which edition and client?**
-<!-- academic binary vX.Y.Z, Python client 0.1.0 / ESML.jl 0.1.0 -->
+**版本与客户端**
+<!-- 学术版 vX.Y.Z；Python 客户端 0.1.0 / ESML.jl 0.1.0 -->
 
-**What did you try, and what happened?**
-<!-- exact command, error text, and whether it was loud or silent -->
+**你试了什么，发生了什么？**
+<!-- 完整命令、报错原文，以及它是响亮报错还是静默失败 -->
 
-**What would make this a 10-minute experience?**
-<!-- the first-mile friction you hit: install, first model, first error, docs -->
+**怎样能让它变成十分钟的体验？**
+<!-- 你在第一英里遇到的摩擦：安装、第一个模型、第一条报错、文档 -->

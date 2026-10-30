@@ -55,6 +55,10 @@ traj = simulate("quickstart/decay.esml", (0.0, 1.0), 20;
 println(traj.series["m.x"][end])
 ```
 
+## 教程
+
+- [十分钟跑通 IEEE 300 潮流](tutorials/ieee300/README.md)：命令行 / Python / Julia 三份实测脚本。
+
 ## 版本
 
 | 版本 | 展平未知量 | 能力 |
