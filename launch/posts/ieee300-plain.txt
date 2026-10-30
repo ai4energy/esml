@@ -1,0 +1,91 @@
+十分钟跑通 IEEE 300 潮流：一个声明式能源建模引擎的学术版
+
+
+如果你只是想算一个 IEEE 300 潮流，通常要先装依赖、写 Newton 迭代、处理稀疏
+雅可比，最后还要自己对结果。我们做了一个声明式建模引擎 ESML：模型写成变量、
+参数、方程，编译展开成扁平方程系统，再做结构分析、因果化与稳态牛顿求解。
+学术版免费，下载即跑。
+
+本文只做一件事：在十分钟内把 IEEE 300 算出来。命令行、Python、Julia 三条
+路径都给出；所有数字都是本机实测，可复跑。
+
+
+一、下载学术版
+
+Linux x86_64，学术/教学/个人非商业用途免费。从 GitHub 发布页下载 v1.8.0：
+
+    https://github.com/ai4energy/esml/releases
+
+    tar -xzf esml-academic-1.8.0-linux-x86_64.tar.gz
+    export ESML_HOME="$PWD/esml-academic-1.8.0-linux-x86_64"
+    "$ESML_HOME/esml" --version
+
+包内自带引擎、物性后端、标准模型库 library/、教程与烟测脚本。
+
+
+二、命令行：一条命令
+
+    "$ESML_HOME/esml" solve \
+      "$ESML_HOME/library/domains/power/cases/case300.comp.esml" \
+      -L "$ESML_HOME/library" --json
+
+输出是 esml.solve/v1 JSON。关键数字：
+
+    unknowns = 4604
+    b1.net.Vm = 1.0284201462972262
+    b1.net.Va = 0.10415017989169018
+    本机 release 整进程墙钟约 0.32 s
+
+
+三、Python：一次性调用
+
+    pip install git+https://github.com/ai4energy/esml-python@v0.1.0
+
+    from esml import solve
+
+    case = "library/domains/power/cases/case300.comp.esml"
+    out = solve(case, libraries=["library"])
+    print(out.unknowns, out.values["b1.net.Vm"])
+
+Python 客户端是 MIT，只通过公开 JSON 协议调用引擎，不含引擎代码。solve 是
+一次性调用：启动一个进程、读 JSON、结束，不保留状态。
+
+
+四、Julia：一次性调用
+
+    using Pkg
+    Pkg.add(url = "https://github.com/ai4energy/ESML.jl", rev = "v0.1.0")
+
+    using ESML
+
+    out = solve("library/domains/power/cases/case300.comp.esml";
+                libraries = ["library"])
+    println(out.unknowns, " ", out.values["b1.net.Vm"])
+
+
+五、边界（先把话说清楚）
+
+- 学术版上限 16,384 个展平未知量；IEEE 300 是 4,604，在范围内。
+- IEEE 2869（56,920）、1354（25,672）、9241（194,664）需要商业版；超限会在
+  求解前响亮报错，给出实际规模、上限与联系方式，不会静默降阶。
+- 常驻数字孪生（DTIL：session / predict / snapshot）属于商业版；本文全部是
+  一次性调用。
+- 当前公开二进制只有 Linux x86_64；客户端是跨平台的。
+
+
+六、下一步
+
+完整教程（含三角色脚本、烟测、排错）：
+    https://github.com/ai4energy/esml/tree/main/tutorials/ieee300
+
+下载：
+    https://github.com/ai4energy/esml/releases/tag/v1.8.0
+
+反馈：
+    https://github.com/ai4energy/esml/issues/new?template=feedback.md
+    https://github.com/ai4energy/esml/discussions
+
+如果你在装、跑第一个模型、看第一条报错时卡住了，请直接开 issue 或邮件
+mingtao.li@gmail.com——这类“第一英里”问题按 bug 处理，24 小时内首响。
+
+引擎是商业软件（不是 MIT）：学术/教学/个人非商业用途免费，商业用途需授权。
