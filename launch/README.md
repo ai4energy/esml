@@ -12,6 +12,7 @@
 | `posts/xsd.md` | XSD / XML 校验（标准与开发者向） |
 | `posts/short-blurbs.md` | 知乎/公众号/LinkedIn/群聊/邮件短版 |
 | `feedback/survey.md` | 反馈问卷与访谈邀请 |
+| `talk/` | 20 分钟演讲 PPT、逐页讲稿、预览与二维码 |
 
 ## 渠道与节奏
 
